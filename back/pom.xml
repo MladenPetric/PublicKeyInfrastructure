@@ -18,7 +18,7 @@
 	<licenses>
         <license>
             <name>MIT License</name>
-            <url>https://github.com/cetkovicaleksa/pki/blob/main/LICENSE</url>
+            <url>https://github.com/mladenpetric/publickeyinfrastructure/blob/main/LICENSE</url>
             <distribution>scm</distribution>
         </license>
 	</licenses>
@@ -40,10 +40,10 @@
         </developer>
 	</developers>
 	<scm>
-        <connection>scm:git:https://github.com/cetkovicaleksa/pki.git</connection>
-        <developerConnection>scm:git:git@github.com:cetkovicaleksa/pki.git</developerConnection>
+        <connection>scm:git:https://github.com/mladenpetric/publickeyinfrastructure.git</connection>
+        <developerConnection>scm:git:git@github.com:mladenpetric/publickeyinfrastructure.git</developerConnection>
         <tag>HEAD</tag>
-		<url>https://github.com/cetkovicaleksa/pki</url>
+		<url>https://github.com/mladenpetric/publickeyinfrastructure</url>
 	</scm>
 	<properties>
 		<java.version>21</java.version>
