@@ -1,0 +1,30 @@
+<nav class="navbar">
+  <div class="navbar-left">
+    <img src="assets/key.png" alt="Logo" class="logo" />
+    <span class="app-name">Public Key Infrastructure</span>
+  </div>
+
+  <div class="navbar-center">
+    <ng-container *ngIf="userRole === 'ADMIN'">
+      <a routerLink="/admin/certificates" class="nav-link">View certificates</a>
+      <a routerLink="/admin/add-certificates" class="nav-link">Add certificates</a>
+      <a routerLink="/admin/add-ca" class="nav-link">Add CA</a>
+    </ng-container>
+
+    <ng-container *ngIf="userRole === 'USER'">
+      <a routerLink="/user/request" class="nav-link">Certificate request</a>
+      <a routerLink="/user/my-certificates" class="nav-link">View certificates</a>
+    </ng-container>
+
+   
+    <ng-container *ngIf="userRole === 'CA'">
+      <a routerLink="/ca/my-certificates" class="nav-link">View certificates</a>
+      <a routerLink="/ca/issue-certificate" class="nav-link">Issue certificate</a>
+      <a routerLink="/ca/add-schema" class="nav-link">Add schema</a>
+    </ng-container>
+  </div>
+
+  <div class="navbar-right">
+    <button class="logout-btn" (click)="onLogout()">Logout</button>
+  </div>
+</nav>

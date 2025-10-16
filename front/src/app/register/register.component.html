@@ -1,0 +1,33 @@
+<div class="register-wrapper" >
+    <h2 class="register-title-main">REGISTER</h2>
+    <form class="register-form">
+      
+      <div class="form-row">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="Email" />
+  
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Password" />
+  
+          <label for="repeat-password">Repeat password</label>
+          <input type="password" id="repeat-password" placeholder="Repeat password" />
+  
+          <label for="firstname">Firstname</label>
+          <input type="text" id="firstname" placeholder="Firstname" />
+
+          <label for="lastname">Lastname</label>
+          <input type="text" id="lastname" placeholder="Lastname" />
+       
+          <label for="phone">Phone number</label>
+          <input type="tel" id="phone" placeholder="Phone number" />        
+      </div>
+  
+      <div class="form-footer">
+        <button type="button" class="next-button" (click)="onRegister()">REGISTER</button>
+        <div class="login-link">
+          <span>Already have account?</span>
+          <span class="login-text" routerLink="/login">Login</span>
+        </div>
+      </div>
+    </form>
+  </div>
