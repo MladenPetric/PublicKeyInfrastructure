@@ -9,8 +9,10 @@ import rs.map.pki.model.User;
 import rs.map.pki.repository.UserRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 //@Profile()
+
 @RequiredArgsConstructor
 @Component
 public class DataSeeder implements CommandLineRunner {
@@ -19,10 +21,10 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        var users = List.of(
-                new User(null, "admin@map.rs", passwordEncoder.encode("securepassword"),"Admin", "Adminović", "MAP", User.Role.ROLE_ADMIN)
-        );
-
-        this.users.saveAllAndFlush(users);
+//        var users = List.of(
+//                new User((UUID) null, "admin@map.rs", passwordEncoder.encode("securepassword"),"Admin", "Adminović", "MAP", User.Role.ROLE_ADMIN, User.Status.ACTIVE)
+//        );
+//
+//        this.users.saveAllAndFlush(users);
     }
 }
