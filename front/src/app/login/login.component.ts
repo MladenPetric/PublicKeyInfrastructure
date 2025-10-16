@@ -14,8 +14,8 @@ export class LoginComponent {
   constructor(private router: Router) {}
 
   onLogin() {   
-    localStorage.setItem('userRole', 'ADMIN'); // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
-    this.router.navigate(['/admin']);  // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
+    localStorage.setItem('userRole', 'USER'); // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
+    this.router.navigate(['/user']);  // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
   }
 
 }

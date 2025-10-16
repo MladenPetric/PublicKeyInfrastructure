@@ -3,6 +3,7 @@
     <form class="register-form">
       
       <div class="form-row">
+        <div class="form-column">
           <label for="email">Email</label>
           <input type="email" id="email" placeholder="Email" />
   
@@ -11,15 +12,21 @@
   
           <label for="repeat-password">Repeat password</label>
           <input type="password" id="repeat-password" placeholder="Repeat password" />
+        </div>
   
+        <div class="form-column">
           <label for="firstname">Firstname</label>
           <input type="text" id="firstname" placeholder="Firstname" />
 
           <label for="lastname">Lastname</label>
           <input type="text" id="lastname" placeholder="Lastname" />
        
-          <label for="phone">Phone number</label>
-          <input type="tel" id="phone" placeholder="Phone number" />        
+          <label for="organization">Organization</label>
+          <select id="organization" [(ngModel)]="selectedOrganization" name="organization">
+            <option value="" disabled selected>Select organization</option>
+            <option *ngFor="let org of organizations" [value]="org">{{ org }}</option>
+          </select>  
+        </div>
       </div>
   
       <div class="form-footer">
