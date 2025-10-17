@@ -29,4 +29,17 @@ public class ActivationTokenService {
         repo.save(at);
         return token;
     }
+
+    public boolean activateUser(String token) {
+        ActivationToken at = repo.findByToken(token)
+                .orElseThrow(() -> new IllegalArgumentException("Nevažeći token."));
+        if (at.isUsed() || at.getExpiresAt().isBefore(Instant.now())) return false;
+
+        at.setUsed(true);
+        at.getUser().setStatus(User.Status.ACTIVE);
+
+        repo.save(at);
+        userRepository.save(at.getUser());
+        return true;
+    }
 }

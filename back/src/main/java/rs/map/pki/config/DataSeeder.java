@@ -16,8 +16,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Component
 public class DataSeeder implements CommandLineRunner {
-    private final UserRepository users;
-    private final PasswordEncoder passwordEncoder;
+//    private final UserRepository users;
+//    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {

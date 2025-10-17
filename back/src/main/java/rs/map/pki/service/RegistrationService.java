@@ -14,7 +14,7 @@ public class RegistrationService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final ActivationTokenService activationTokenService;
-
+    private final EmailService emailService;
     @Transactional
     public void registerUser(UserRegistrationRequestDto request) {
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -36,10 +36,30 @@ public class RegistrationService {
         String token = activationTokenService.createToken(user);
 
         // pošalji aktivacioni mejl
-        //emailService.sendActivationEmail(user.getEmail(), token);
+        emailService.sendActivationEmail(user.getEmail(), token);
     }
 
+    @Transactional
+    public void registerCAUserByAdmin(UserRegistrationRequestDto request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
+            throw new IllegalArgumentException("Korisnik sa ovom email adresom već postoji.");
+        }
 
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword())); // šifrovana lozinka
+        user.setName(request.getFirstName());
+        user.setSurname(request.getLastName());
+        user.setOrganization(request.getOrganization());
+        user.setRole(User.Role.ROLE_CA); // fiksna rola za admin endpoint
+        user.setStatus(User.Status.ACTIVE); // odmah aktivan, nema tokena
+
+        userRepository.save(user);
+    }
+
+    public boolean activateAccount(String token) {
+        return activationTokenService.activateUser(token);
+    }
 
 
 }
