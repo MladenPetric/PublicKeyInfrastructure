@@ -1,0 +1,50 @@
+.certificates-container {
+  padding: 20px;
+}
+
+.cert-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cert-table th, .cert-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.cert-table th {
+  background-color: #f2f2f2;
+}
+
+.revoked {
+  color: red;
+  font-weight: bold;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-download {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-revoke {
+  background-color: #dc3545;
+  color: white;
+}
+
+.btn-revoke:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}

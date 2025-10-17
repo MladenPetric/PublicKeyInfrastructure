@@ -13,9 +13,9 @@ import { CreateCertifcatesComponent } from './certificate/create-certifcates/cre
 import { AddCaComponent } from './add-ca/add-ca.component';
 import { CreateSchemaComponent } from './certificate/create-schema/create-schema.component';
 import { IssueCertificateComponent } from './certificate/issue-certificate/issue-certificate.component';
-import { ViewMyCertificatesComponent } from './certificate/view-my-certificates/view-my-certificates.component';
 import { RequestCertificateComponent } from './certificate/request-certificate/request-certificate.component';
 import { ViewCertificatesComponent } from './certificate/view-certificates/view-certificates.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,14 +31,14 @@ import { ViewCertificatesComponent } from './certificate/view-certificates/view-
     AddCaComponent,
     CreateSchemaComponent,
     IssueCertificateComponent,
-    ViewMyCertificatesComponent,
     RequestCertificateComponent,
-    ViewCertificatesComponent
+    ViewCertificatesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
