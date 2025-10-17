@@ -25,4 +25,11 @@ export class CertificateService {
     return this.http.get<CertificateDTO[]>(`${this.apiUrl}/get-by-organization/${org}`);
   }
 
+
+
+
+
+  revokeCertificate(certificateId: string, reason: string): Observable<void> {
+    return this.http.put<void>(`${this.apiUrl}/revoke/${certificateId}`, { reason });
+  }
 }

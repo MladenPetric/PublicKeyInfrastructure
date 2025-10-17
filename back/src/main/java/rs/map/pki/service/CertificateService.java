@@ -2,6 +2,7 @@ package rs.map.pki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import rs.map.pki.dto.CertificateDTO;
 import rs.map.pki.model.Certificate;
 import rs.map.pki.model.User;
@@ -58,6 +59,19 @@ public class CertificateService {
     }
 
 
+    @Transactional
+    public void revokeCertificate(UUID id, String reason) {
+        Certificate cert = certificateRepository.findById(id).orElseThrow(() -> new RuntimeException("Certificate not found"));
+
+        if (cert.isRevoked()) {
+            throw new RuntimeException("Certificate already revoked");
+        }
+
+        cert.setRevoked(true);
+        cert.setRevocationReason(reason);
+
+        certificateRepository.save(cert);
+    }
 
 
 }

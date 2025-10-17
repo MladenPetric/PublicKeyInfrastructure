@@ -20,9 +20,12 @@ export class ViewCertificatesComponent {
 
     this.userRole = localStorage.getItem('userRole');
     this.userId = localStorage.getItem('userId'); 
-    this.organization = localStorage.getItem('organization');
+    this.organization = localStorage.getItem('organization');                                                                      
+    this.loadCertifiactes()
+  }
 
-     if (this.userRole === 'ADMIN') {
+  loadCertifiactes(): void {
+    if (this.userRole === 'ADMIN') {
       this.loadAllCertificates();
     } else if (this.userRole === 'USER' && this.userId) {
       this.loadCertificatesByOwner(this.userId);
@@ -31,34 +34,6 @@ export class ViewCertificatesComponent {
     } else {
       console.warn('Nedostaju podaci za ulogovanog korisnika.');
     }
-
-  // 👇 Za sada statički primeri — kasnije ćeš ovo puniti iz servisa
-  //   this.certificates = [
-  //     {
-  //       id: '1',
-  //       serialNumber: 'ABC123',
-  //       organization: 'MAP Security',
-  //       revoked: false,
-  //       revocationReason: '',
-  //       validFrom: '2024-01-01T00:00:00',
-  //       validTo: '2026-01-01T00:00:00',
-  //       type: 'ROOT',
-  //       publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp...',
-  //       isCa: true
-  //     },
-  //     {
-  //       id: '2',
-  //       serialNumber: 'XYZ789',
-  //       organization: 'TechTrust',
-  //       revoked: true,
-  //       revocationReason: 'Compromised key',
-  //       validFrom: '2023-03-01T00:00:00',
-  //       validTo: '2025-03-01T00:00:00',
-  //       type: 'END_ENTITY',
-  //       publicKey: 'MIIBCgKCAQEAtqksnZ2bK7dY7...',
-  //       isCa: false
-  //     }
-  //   ];
   }
 
   loadAllCertificates(): void {
@@ -87,6 +62,22 @@ export class ViewCertificatesComponent {
   }
 
   onRevoke(certId: string): void {
-    // TODO: implementirati API poziv kasnije
-  }
+    const reason = prompt('Enter revocation reason (e.g. keyCompromise, cessationOfOperation, affiliationChanged):');
+  
+    if (!reason) {
+      alert('Revocation cancelled.');
+      return;
+    }
+
+    this.certificateService.revokeCertificate(certId, reason).subscribe({
+      next: () => {
+        alert('Certificate revoked successfully.');
+        this.loadCertifiactes(); 
+      },
+      error: (err) => {
+        console.error('Error revoking certificate', err);
+        alert('Error revoking certificate.');
+      }
+      });
+    }
 }
