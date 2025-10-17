@@ -1,1 +1,39 @@
-<p>view-certificates works!</p>
+<div class="certificates-container">
+  <h2>All Certificates</h2>
+
+  <table class="cert-table" *ngIf="certificates && certificates.length > 0; else noData">
+    <thead>
+      <tr>
+        <th>Serial Number</th>
+        <th>Organization</th>
+        <th>Type</th>
+        <th>Valid From</th>
+        <th>Valid To</th>
+        <th>CA</th>
+        <th>Revoked</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let cert of certificates">
+        <td>{{ cert.serialNumber }}</td>
+        <td>{{ cert.organization }}</td>
+        <td>{{ cert.type }}</td>
+        <td>{{ cert.validFrom | date:'shortDate' }}</td>
+        <td>{{ cert.validTo | date:'shortDate' }}</td>
+        <td>{{ cert.isCa ? 'Yes' : 'No' }}</td>
+        <td [class.revoked]="cert.revoked">{{ cert.revoked ? 'Yes' : 'No' }}</td>
+
+        <td class="actions">
+          <button class="btn-download" (click)="onDownload(cert.id)">Download</button>
+          <button class="btn-revoke" (click)="onRevoke(cert.id)" [disabled]="cert.revoked">Revoke</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noData>
+    <p><i>No certificates available.</i></p>
+  </ng-template>
+</div>

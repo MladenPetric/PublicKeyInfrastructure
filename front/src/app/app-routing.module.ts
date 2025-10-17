@@ -7,7 +7,6 @@ import { HomeCaComponent } from './home/home-ca/home-ca.component';
 import { HomeUserComponent } from './home/home-user/home-user.component';
 import { CreateCertifcatesComponent } from './certificate/create-certifcates/create-certifcates.component';
 import { AddCaComponent } from './add-ca/add-ca.component';
-import { ViewMyCertificatesComponent } from './certificate/view-my-certificates/view-my-certificates.component';
 import { CreateSchemaComponent } from './certificate/create-schema/create-schema.component';
 import { IssueCertificateComponent } from './certificate/issue-certificate/issue-certificate.component';
 import { RequestCertificateComponent } from './certificate/request-certificate/request-certificate.component';
@@ -30,7 +29,7 @@ const routes: Routes = [
     path: 'ca', 
     component: HomeCaComponent,
     children: [
-      { path: 'my-certificates', component: ViewMyCertificatesComponent},
+      { path: 'certificates', component: ViewCertificatesComponent},
       { path: 'issue-certificate', component: IssueCertificateComponent },
       { path: 'add-schema', component: CreateSchemaComponent }
     ] 
@@ -38,7 +37,7 @@ const routes: Routes = [
   { path: 'user', 
     component: HomeUserComponent,
     children: [
-      { path: 'my-certificates', component: ViewMyCertificatesComponent},
+      { path: 'certificates', component: ViewCertificatesComponent},
       { path: 'request', component: RequestCertificateComponent }
     ]  
   }

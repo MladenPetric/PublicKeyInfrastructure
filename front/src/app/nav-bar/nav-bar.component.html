@@ -13,12 +13,12 @@
 
     <ng-container *ngIf="userRole === 'USER'">
       <a routerLink="/user/request" class="nav-link">Certificate request</a>
-      <a routerLink="/user/my-certificates" class="nav-link">View certificates</a>
+      <a routerLink="/user/certificates" class="nav-link">View certificates</a>
     </ng-container>
 
    
     <ng-container *ngIf="userRole === 'CA'">
-      <a routerLink="/ca/my-certificates" class="nav-link">View certificates</a>
+      <a routerLink="/ca/certificates" class="nav-link">View certificates</a>
       <a routerLink="/ca/issue-certificate" class="nav-link">Issue certificate</a>
       <a routerLink="/ca/add-schema" class="nav-link">Add schema</a>
     </ng-container>
