@@ -25,6 +25,7 @@ public class User {
 
     @NotBlank(message = "{user.email.blank}")
     @Email(message = "{user.email.invalid}")
+    @Column(unique = true)
     private String email;
 
     @NotBlank(message = "{user.password.blank}")

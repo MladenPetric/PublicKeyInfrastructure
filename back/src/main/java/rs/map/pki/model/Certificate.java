@@ -59,3 +59,4 @@ public class Certificate {
 
     private boolean isCa;
 }
+

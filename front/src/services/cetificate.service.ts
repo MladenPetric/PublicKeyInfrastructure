@@ -9,7 +9,7 @@ import { CertificateDTO } from '../dto/cetificate/certificate-view.dto';
 })
 export class CertificateService {
 
-  private apiUrl = 'https://localhost:4200/certificate'; 
+  private apiUrl = 'https://localhost:8080/certificate'; 
 
   constructor(private http: HttpClient) {}
 

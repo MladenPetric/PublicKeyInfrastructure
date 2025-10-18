@@ -18,7 +18,7 @@ export class LoginComponent {
 
   onLogin() {   
     this.role = 'ADMIN'; // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
-    this.userId = 'b6c57d7b-fb9e-4a47-9b71-b1b2f3f4b5b6'; // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
+    this.userId = "05c79cf0-14f3-4634-8273-faa55cb671fa"; // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
     this.organization = 'MAP'; // OVO IDE DINAMICKI U ZAVISNOSTI KO SE ULOGUJE
     
     localStorage.setItem('userRole', this.role);
