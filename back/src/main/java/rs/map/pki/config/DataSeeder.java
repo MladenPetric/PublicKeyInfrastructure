@@ -16,15 +16,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Component
 public class DataSeeder implements CommandLineRunner {
-//    private final UserRepository users;
-//    private final PasswordEncoder passwordEncoder;
+    private final UserRepository users;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
-//        var users = List.of(
-//                new User((UUID) null, "admin@map.rs", passwordEncoder.encode("securepassword"),"Admin", "Adminović", "MAP", User.Role.ROLE_ADMIN, User.Status.ACTIVE)
-//        );
-//
-//        this.users.saveAllAndFlush(users);
+        var users = List.of(
+                new User((UUID) null, "admin@map.rs", passwordEncoder.encode("securepassword"),"Admin", "Adminović", "MAP", User.Role.ROLE_ADMIN, User.Status.ACTIVE)
+        );
+
+        this.users.saveAllAndFlush(users);
     }
 }
