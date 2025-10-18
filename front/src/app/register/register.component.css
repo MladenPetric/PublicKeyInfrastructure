@@ -21,10 +21,16 @@
   
   .form-row {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 60%;
+    justify-content: space-between;
+    width: 100%;
     gap: 20px;
+  }
+
+  .form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 40%;
   }
   
   
@@ -91,3 +97,18 @@
     border: 1px solid #0056b3;
   }
   
+  .form-row select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 16px;
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+  }

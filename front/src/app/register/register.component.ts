@@ -7,7 +7,15 @@ import { Component } from '@angular/core';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
- 
+  organizations: string[] = [
+    'Google',
+    'Microsoft',
+    'Tesla',
+    'Amazon',
+    'OpenAI',
+    'SpaceX'
+  ];
+  selectedOrganization: string = '';
   onRegister(){
     
   }
