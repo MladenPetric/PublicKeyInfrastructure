@@ -15,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "users")
 public class User {
 
@@ -43,12 +44,20 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Transient
-    public String getFullName() {
-        return name + " " + surname;
-    }
+    @NotNull(message = "{user.status.null}")
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+//    @Transient
+//    public String getFullName() {
+//        return name + " " + surname;
+//    }
 
     public static enum Role {
         ROLE_ADMIN, ROLE_CA, ROLE_SIMPSON
+    }
+
+    public static enum Status {
+        ACTIVE, INACTIVE
     }
 }
