@@ -21,37 +21,38 @@ const routes: Routes = [
     path: 'admin',
     component: HomeAdminComponent,
     canActivate: [authGuard],
-    data: { roles: ['ROLE_ADMIN'] } }
+    data: { roles: ['ROLE_ADMIN'] },
     children: [
       { path: 'certificates', component: ViewCertificatesComponent },
       { path: 'add-certificates', component: CreateCertifcatesComponent },
-      { path: 'add-ca', component: AddCaComponent }
-    ]
+      { path: 'add-ca', component: AddCaComponent },
+    ],
   },
   {
     path: 'ca',
     component: HomeCaComponent,
     canActivate: [authGuard],
-    data: { roles: ['ROLE_CA'] } }
+    data: { roles: ['ROLE_CA'] },
     children: [
-      { path: 'certificates', component: ViewCertificatesComponent},
+      { path: 'certificates', component: ViewCertificatesComponent },
       { path: 'issue-certificate', component: IssueCertificateComponent },
-      { path: 'add-schema', component: CreateSchemaComponent }
-    ]
+      { path: 'add-schema', component: CreateSchemaComponent },
+    ],
   },
-  { path: 'user',
+  {
+    path: 'user',
     component: HomeUserComponent,
     canActivate: [authGuard],
-    data: { roles: ['ROLE_SIMPSON'] } }
+    data: { roles: ['ROLE_SIMPSON'] },
     children: [
-      { path: 'certificates', component: ViewCertificatesComponent},
-      { path: 'request', component: RequestCertificateComponent }
-    ]
-  }
+      { path: 'certificates', component: ViewCertificatesComponent },
+      { path: 'request', component: RequestCertificateComponent },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
