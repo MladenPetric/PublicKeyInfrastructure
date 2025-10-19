@@ -18,17 +18,17 @@ export class LoginComponent {
   constructor(private router: Router, private auth: AuthService) {}
 
   onLogin() {
-    this.auth
-      .login({
-        email: this.username,
-        password: this.password,
-      })
-      .subscribe({
-        next: (_) => {
-          const user = this.auth.user;
-          // ...
-        },
-        error: console.log,
-      });
-  }
+
+    this.auth.login({
+      email: this.username,
+      password: this.password,
+    }).subscribe({
+      next: _ => {
+        const user = this.auth.user
+        // ...
+      },
+      error: console.log
+    })
+
+}
 }

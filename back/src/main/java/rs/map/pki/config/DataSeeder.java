@@ -24,6 +24,7 @@ public class DataSeeder implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
     private final CertificateRepository certificates;
 
+
     @Override
     public void run(String... args) throws Exception {
 //        var users = List.of(
