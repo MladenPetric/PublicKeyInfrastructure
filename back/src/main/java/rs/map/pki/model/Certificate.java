@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "certificates")
 public class Certificate {
 
     @Id
@@ -59,3 +59,4 @@ public class Certificate {
 
     private boolean isCa;
 }
+

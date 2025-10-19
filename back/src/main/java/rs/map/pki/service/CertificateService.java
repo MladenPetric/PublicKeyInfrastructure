@@ -31,6 +31,7 @@ public class CertificateService {
     private UserRepository userRepository;
 
     public Collection<CertificateDTO> getAllCertificates() {
+        System.out.println("-----------------------------------");
         return certificateRepository.findAll()
                 .stream()
                 .map(CertificateDTO::new)
