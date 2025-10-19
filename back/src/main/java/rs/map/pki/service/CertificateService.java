@@ -1,6 +1,7 @@
 package rs.map.pki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.map.pki.dto.CertificateDTO;
@@ -28,6 +29,9 @@ public class CertificateService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Value("${encryption.secret-key}")
+    private String base64SecretKey;
 
     public Collection<CertificateDTO> getAllCertificates() {
         System.out.println("-----------------------------------");
@@ -85,6 +89,56 @@ public class CertificateService {
                 .stream()
                 .map(CertificateDTO::new)
                 .toList();
+    }
+
+
+
+    public byte[] generatePkcs12Keystore(UUID certificateId) throws Exception {
+        Certificate certificate = certificateRepository.findById(certificateId).orElseThrow(() -> new IllegalArgumentException("Certificate not found"));
+
+        String privateKeyPem = decryptPrivateKey(certificate.getPrivateKeyEncrypted());
+        PrivateKey privateKey = loadPrivateKeyFromPem(privateKeyPem);
+
+        X509Certificate x509Certificate = loadX509FromString(certificate.getPublicKey());
+
+        KeyStore keyStore = KeyStore.getInstance("PKCS12");
+        keyStore.load(null, null);
+
+        keyStore.setKeyEntry("certificate-key", privateKey, "changeit".toCharArray(), new java.security.cert.Certificate[]{x509Certificate});
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        keyStore.store(baos, "changeit".toCharArray());
+
+        return baos.toByteArray();
+    }
+
+    private PrivateKey loadPrivateKeyFromPem(String pem) throws Exception {
+        String privateKeyPEM = pem
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replaceAll("\\s+", "");
+
+
+        byte[] encoded = Base64.getDecoder().decode(privateKeyPEM);
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);
+        KeyFactory kf = KeyFactory.getInstance("RSA");
+        return kf.generatePrivate(keySpec);
+    }
+
+    private X509Certificate loadX509FromString(String pem) throws Exception {
+        String certPEM = pem
+                .replace("-----BEGIN CERTIFICATE-----", "")
+                .replace("-----END CERTIFICATE-----", "")
+                .replaceAll("\\s+", "");
+
+        byte[] decoded = Base64.getDecoder().decode(certPEM);
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+        return (X509Certificate) cf.generateCertificate(new ByteArrayInputStream(decoded));
+    }
+
+    private String decryptPrivateKey(String encryptedKey) {
+        // DEKRIPTOVANJA PRIVATNOG KLJUČA DODATI
+        return encryptedKey;
     }
 
 }

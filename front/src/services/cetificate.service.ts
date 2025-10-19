@@ -25,6 +25,9 @@ export class CertificateService {
     return this.http.get<CertificateDTO[]>(`${this.apiUrl}/get-by-organization/${org}`);
   }
 
+   downloadCertificate(id: string): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob' });
+  }
 
 
 

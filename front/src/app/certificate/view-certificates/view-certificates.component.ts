@@ -74,7 +74,17 @@ export class ViewCertificatesComponent {
   }
 
   onDownload(certId: string): void {
-    // TODO: implementirati API poziv kasnije
+    this.certificateService.downloadCertificate(certId).subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'certificate.p12';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Error downloading certificate:', err)
+    });
   }
 
   onRevoke(certId: string): void {

@@ -46,7 +46,7 @@ public class DataSeeder implements CommandLineRunner {
 //        );
 //
 //        this.certificates.saveAllAndFlush(certificates);
-
+//
 
     }
 }
