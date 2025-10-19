@@ -14,7 +14,7 @@ public class EmailService {
     private final JavaMailSender mailSender;
 
     public void sendActivationEmail(String to, String token) {
-        String activationLink = "https://localhost:8080/auth/activate?token=" + token;
+        String activationLink = "https://localhost:8080/api/auth/activate?token=" + token;
 
         String subject = "Account Activation - PKI System";
         String htmlMessage = "<p>Hello,</p>"

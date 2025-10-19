@@ -1,6 +1,7 @@
 package rs.map.pki.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import rs.map.pki.dto.CertificateDTO;
 import rs.map.pki.model.Certificate;
@@ -29,6 +30,9 @@ public class CertificateService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Value("${encryption.secret-key}")
+    private String base64SecretKey;
 
     public Collection<CertificateDTO> getAllCertificates() {
         System.out.println("-----------------------------------");
@@ -82,6 +86,7 @@ public class CertificateService {
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replaceAll("\\s+", "");
+
 
         byte[] encoded = Base64.getDecoder().decode(privateKeyPEM);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(encoded);

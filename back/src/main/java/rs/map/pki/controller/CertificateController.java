@@ -39,6 +39,7 @@ public class CertificateController {
     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadCertificate(@PathVariable UUID id) {
         try {
+
             byte[] keystoreData = certificateService.generatePkcs12Keystore(id);
 
             HttpHeaders headers = new HttpHeaders();
@@ -47,8 +48,7 @@ public class CertificateController {
 
             return new ResponseEntity<>(keystoreData, headers, HttpStatus.OK);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(null);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
