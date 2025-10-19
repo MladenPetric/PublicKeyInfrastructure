@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, tap, map, catchError, of } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 
 export interface User {
   email: string;
-  roles: string[];
+  password: string;
+  name: string; 
+  surname: string;
+  organization: string;
+  role: 'ROLE_ADMIN' | 'ROLE_CA' | 'ROLE_SIMPSON' | null;
+  status: 'ACTIVE' | 'INACTIVE'
 }
 
 @Injectable({
@@ -27,7 +31,7 @@ export class AuthService {
     return this._token;
   }
 
-  constructor(private jwtHelper: JwtHelperService, private http: HttpClient) {
+  constructor(private http: HttpClient) {
     this.refreshToken().subscribe();
   }
 
@@ -79,22 +83,9 @@ export class AuthService {
       return;
     }
 
-    try {
-      const decoded = this.jwtHelper.decodeToken(token);
-      if (!decoded) {
-        throw new Error('');
-      }
-
-      const user = {
-        email: decoded.email || decoded.sub || '',
-        roles: decoded.roles || [],
-      };
-      this.userSubject.next(user as User);
-    } catch {
-      this.whoAmI().subscribe({
-        next: (user) => this.userSubject.next(user),
+    this.whoAmI().subscribe({
+        next: (user: User) => this.userSubject.next(user),
         error: () => this.userSubject.next(null),
       });
-    }
   }
 }

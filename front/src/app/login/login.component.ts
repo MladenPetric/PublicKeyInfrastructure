@@ -25,7 +25,14 @@ export class LoginComponent {
     }).subscribe({
       next: _ => {
         const user = this.auth.user
-        // ...
+        
+        if (this.role === 'ADMIN') {
+          this.router.navigate(['/admin']);
+        } else if (this.role === 'USER') {
+          this.router.navigate(['/user']);
+        } else if (this.role === 'CA') {
+          this.router.navigate(['/ca']);
+        }
       },
       error: console.log
     })

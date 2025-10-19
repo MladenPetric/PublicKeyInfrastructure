@@ -34,6 +34,7 @@ public class Certificate {
     private boolean revoked;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
     private RevocationReason revocationReason;
 
     @Column(nullable = false)

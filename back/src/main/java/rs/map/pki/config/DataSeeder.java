@@ -40,9 +40,9 @@ public class DataSeeder implements CommandLineRunner {
 //        var user = users.get(2);
 //
 //        var certificates = List.of(
-//                new Certificate(null, "SN-001", "ORG", ca, false, "", LocalDateTime.now(), LocalDateTime.now().plusYears(1), null, CertificateType.ROOT, "dummy-public-key-1", "dummy-private-key-1", "dummy-signature", true),
-//                new Certificate(null, "SN-002", "ORG", user, false, "", LocalDateTime.now(), LocalDateTime.now().plusYears(1), null, CertificateType.INTERMEDIATE, "dummy-public-key-2", "dummy-private-key-2", "dummy-signature", true),
-//                new Certificate(null, "SN-003", "MAP", user, false, "", LocalDateTime.now(), LocalDateTime.now().plusYears(1), null, CertificateType.END_ENTITY, "dummy-public-key-3", "dummy-private-key-3", "dummy-signature", false)
+//                new Certificate(null, "SN-001", "ORG", ca, false, null, LocalDateTime.now(), LocalDateTime.now().plusYears(1), null, CertificateType.ROOT, "dummy-public-key-1", "dummy-private-key-1", "dummy-signature", true),
+//                new Certificate(null, "SN-002", "ORG", user, false, null, LocalDateTime.now(), LocalDateTime.now().plusYears(1), null, CertificateType.INTERMEDIATE, "dummy-public-key-2", "dummy-private-key-2", "dummy-signature", true),
+//                new Certificate(null, "SN-003", "MAP", user, false, null, LocalDateTime.now(), LocalDateTime.now().plusYears(1), null, CertificateType.END_ENTITY, "dummy-public-key-3", "dummy-private-key-3", "dummy-signature", false)
 //        );
 //
 //        this.certificates.saveAllAndFlush(certificates);

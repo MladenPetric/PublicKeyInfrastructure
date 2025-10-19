@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -10,10 +11,12 @@ import { Router } from '@angular/router';
 export class NavBarComponent {
   userRole: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.userRole = localStorage.getItem('userRole'); 
+    this.authService.user$.subscribe({
+      next: (data) => this.userRole = data.role,   
+    });
   }
 
   onLogout() {
