@@ -12,6 +12,7 @@ import rs.map.pki.model.User;
 import rs.map.pki.service.CertificateService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -58,6 +59,12 @@ public class CertificateController {
         String reason = body.get("reason");
         certificateService.revokeCertificate(id, reason);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/crl")
+    public ResponseEntity<List<CertificateDTO>> getRevokedCertificates() {
+        List<CertificateDTO> revoked = certificateService.getRevokedCertificates();
+        return ResponseEntity.ok(revoked);
     }
 
 }

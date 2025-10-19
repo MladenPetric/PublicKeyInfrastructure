@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "certificates")
 public class Certificate {
 
     @Id
@@ -33,8 +33,8 @@ public class Certificate {
     @Column(nullable = false)
     private boolean revoked;
 
-    @Column(nullable = false)
-    private String revocationReason;
+    @Enumerated(EnumType.STRING)
+    private RevocationReason revocationReason;
 
     @Column(nullable = false)
     private LocalDateTime validFrom;

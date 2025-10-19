@@ -29,7 +29,14 @@ export class CertificateService {
 
 
 
-  revokeCertificate(certificateId: string, reason: string): Observable<void> {
-    return this.http.put<void>(`${this.apiUrl}/revoke/${certificateId}`, { reason });
+ 
+
+  revokeCertificate(id: string, reason: string): Observable<void> {
+    const body = { reason };
+    return this.http.put<void>(`${this.apiUrl}/revoke/${id}`, body);
+  }
+  
+  getRevokedCertificates(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/crl`);
   }
 }

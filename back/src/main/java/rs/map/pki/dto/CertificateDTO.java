@@ -6,6 +6,7 @@ import rs.map.pki.model.CertificateType;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+
 public class CertificateDTO {
     private UUID id;
     private String serialNumber;
@@ -23,7 +24,7 @@ public class CertificateDTO {
         this.serialNumber = c.getSerialNumber();
         this.organization = c.getOrganization();
         this.revoked = c.isRevoked();
-        this.revocationReason = c.getRevocationReason();
+        this.revocationReason = String.valueOf(c.getRevocationReason());
         this.validFrom = c.getValidFrom();
         this.validTo = c.getValidTo();
         this.type = c.getType();

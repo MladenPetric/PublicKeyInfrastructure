@@ -37,3 +37,20 @@
     <p><i>No certificates available.</i></p>
   </ng-template>
 </div>
+
+<div class="dialog-backdrop" *ngIf="showRevokeDialog">
+  <div class="dialog">
+    <h3>Revoke Certificate</h3>
+
+    <label for="reason">Select revocation reason:</label>
+    <select id="reason" [(ngModel)]="selectedReason">
+      <option value="" disabled selected>Select reason</option>
+      <option *ngFor="let r of revocationReasons" [value]="r">{{ r }}</option>
+    </select>
+
+    <div class="dialog-actions">
+      <button (click)="confirmRevoke()" class="btn-confirm">Confirm</button>
+      <button (click)="cancelRevoke()" class="btn-cancel">Cancel</button>
+    </div>
+  </div>
+</div>

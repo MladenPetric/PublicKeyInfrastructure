@@ -13,6 +13,22 @@ export class ViewCertificatesComponent {
   userRole: string | null = null;
   userId: string | null = null;
   organization: string | null = null;
+  showRevokeDialog = false;
+  selectedCertId: string | null = null;
+  selectedReason: string = '';
+
+  revocationReasons: string[] = [
+    'UNSPECIFIED',
+    'KEY_COMPROMISE',
+    'CA_COMPROMISE',
+    'AFFILIATION_CHANGED',
+    'SUPERSEDED',
+    'CESSATION_OF_OPERATION',
+    'CERTIFICATE_HOLD',
+    'REMOVE_FROM_CRL',
+    'PRIVILEGE_WITHDRAWN',
+    'AA_COMPROMISE'
+  ];
 
   constructor(private certificateService: CertificateService) {}
 
@@ -62,22 +78,34 @@ export class ViewCertificatesComponent {
   }
 
   onRevoke(certId: string): void {
-    const reason = prompt('Enter revocation reason (e.g. keyCompromise, cessationOfOperation, affiliationChanged):');
-  
-    if (!reason) {
-      alert('Revocation cancelled.');
+    this.selectedCertId = certId;
+    this.showRevokeDialog = true;
+  }
+
+  confirmRevoke(): void {
+    if (!this.selectedCertId || !this.selectedReason) {
+      alert('Please select a reason before confirming.');
       return;
     }
 
-    this.certificateService.revokeCertificate(certId, reason).subscribe({
+    this.certificateService.revokeCertificate(this.selectedCertId, this.selectedReason).subscribe({
       next: () => {
         alert('Certificate revoked successfully.');
-        this.loadCertifiactes(); 
+        this.showRevokeDialog = false;
+        this.selectedReason = '';
+        this.selectedCertId = null;
+        this.loadCertifiactes();
       },
       error: (err) => {
-        console.error('Error revoking certificate', err);
         alert('Error revoking certificate.');
+        console.error(err);
       }
-      });
-    }
+    });
+  }
+
+  cancelRevoke(): void {
+    this.showRevokeDialog = false;
+    this.selectedReason = '';
+    this.selectedCertId = null;
+  }
 }
