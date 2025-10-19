@@ -21,7 +21,7 @@ const routes: Routes = [
     path: 'admin',
     component: HomeAdminComponent,
     canActivate: [authGuard],
-    data: { roles: ['ROLE_ADMIN'] } }
+    data: { roles: ['ROLE_ADMIN'] }, 
     children: [
       { path: 'certificates', component: ViewCertificatesComponent },
       { path: 'add-certificates', component: CreateCertifcatesComponent },
@@ -32,7 +32,7 @@ const routes: Routes = [
     path: 'ca',
     component: HomeCaComponent,
     canActivate: [authGuard],
-    data: { roles: ['ROLE_CA'] } }
+    data: { roles: ['ROLE_CA'] },
     children: [
       { path: 'certificates', component: ViewCertificatesComponent},
       { path: 'issue-certificate', component: IssueCertificateComponent },
@@ -42,7 +42,7 @@ const routes: Routes = [
   { path: 'user',
     component: HomeUserComponent,
     canActivate: [authGuard],
-    data: { roles: ['ROLE_SIMPSON'] } }
+    data: { roles: ['ROLE_SIMPSON'] },
     children: [
       { path: 'certificates', component: ViewCertificatesComponent},
       { path: 'request', component: RequestCertificateComponent }

@@ -19,8 +19,8 @@ export class LoginComponent {
 
   onLogin() {
     this.auth.login({
-      email: username,
-      password: password,
+      email: this.username,
+      password: this.password,
     }).subscribe({
       next: _ => {
         const user = this.auth.user
@@ -28,4 +28,5 @@ export class LoginComponent {
       },
       error: console.log
     })
+}
 }
