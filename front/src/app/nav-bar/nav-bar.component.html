@@ -5,19 +5,19 @@
   </div>
 
   <div class="navbar-center">
-    <ng-container *ngIf="userRole === 'ADMIN'">
+    <ng-container *ngIf="userRole === 'ROLE_ADMIN'">
       <a routerLink="/admin/certificates" class="nav-link">View certificates</a>
       <a routerLink="/admin/add-certificates" class="nav-link">Add certificates</a>
       <a routerLink="/admin/add-ca" class="nav-link">Add CA</a>
     </ng-container>
 
-    <ng-container *ngIf="userRole === 'USER'">
+    <ng-container *ngIf="userRole === 'ROLE_SIMPSON'">
       <a routerLink="/user/request" class="nav-link">Certificate request</a>
       <a routerLink="/user/certificates" class="nav-link">View certificates</a>
     </ng-container>
 
    
-    <ng-container *ngIf="userRole === 'CA'">
+    <ng-container *ngIf="userRole === 'ROLE_CA'">
       <a routerLink="/ca/certificates" class="nav-link">View certificates</a>
       <a routerLink="/ca/issue-certificate" class="nav-link">Issue certificate</a>
       <a routerLink="/ca/add-schema" class="nav-link">Add schema</a>

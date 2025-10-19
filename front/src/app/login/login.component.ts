@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -17,25 +18,31 @@ export class LoginComponent {
 
   constructor(private router: Router, private auth: AuthService) {}
 
-  onLogin() {
+ onLogin() {
 
     this.auth.login({
       email: this.username,
       password: this.password,
     }).subscribe({
-      next: _ => {
-        const user = this.auth.user
-        
-        if (this.role === 'ADMIN') {
-          this.router.navigate(['/admin']);
-        } else if (this.role === 'USER') {
-          this.router.navigate(['/user']);
-        } else if (this.role === 'CA') {
-          this.router.navigate(['/ca']);
-        }
-      },
+      next: _ => console.log("Login successfull"),
       error: console.log
     })
 
-}
+    this.auth.user$.pipe(
+      filter(user => !!user)
+    ).subscribe(user => {
+      this.role = user.role
+
+      if (this.role === 'ROLE_ADMIN') {
+          this.router.navigate(['/admin']);
+        } else if (this.role === 'ROLE_SIMPSON') {
+          this.router.navigate(['/user']);
+        } else if (this.role === 'ROLE_CA') {
+          this.router.navigate(['/ca']);
+        }
+    })
+
+  }
+
+
 }

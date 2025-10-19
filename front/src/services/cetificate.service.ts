@@ -29,11 +29,6 @@ export class CertificateService {
     return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob' });
   }
 
-
-
-
- 
-
   revokeCertificate(id: string, reason: string): Observable<void> {
     const body = { reason };
     return this.http.put<void>(`${this.apiUrl}/revoke/${id}`, body);

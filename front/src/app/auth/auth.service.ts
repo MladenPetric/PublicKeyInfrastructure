@@ -4,6 +4,7 @@ import { BehaviorSubject, tap, map, catchError, of } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 
 export interface User {
+  id: string;
   email: string;
   password: string;
   name: string; 

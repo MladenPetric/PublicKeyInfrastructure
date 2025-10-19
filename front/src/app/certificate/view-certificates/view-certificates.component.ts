@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CertificateDTO } from '../../../dto/cetificate/certificate-view.dto';
 import { CertificateService } from '../../../services/cetificate.service';
+import { AuthService } from '../../auth/auth.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-view-certificates',
@@ -30,22 +32,26 @@ export class ViewCertificatesComponent {
     'AA_COMPROMISE'
   ];
 
-  constructor(private certificateService: CertificateService) {}
+  constructor(private certificateService: CertificateService, private authService: AuthService) {}
 
   ngOnInit(): void {
 
-    this.userRole = localStorage.getItem('userRole');
-    this.userId = localStorage.getItem('userId'); 
-    this.organization = localStorage.getItem('organization');                                                                      
-    this.loadCertifiactes()
+    this.authService.user$.pipe(
+          filter(user => !!user)
+        ).subscribe(user => {
+          this.userRole = user.role
+          this.userId = user.id
+          this.organization = user.organization
+          this.loadCertifiactes()
+    })                                                            
   }
 
   loadCertifiactes(): void {
-    if (this.userRole === 'ADMIN') {
+    if (this.userRole === 'ROLE_ADMIN') {
       this.loadAllCertificates();
-    } else if (this.userRole === 'USER' && this.userId) {
+    } else if (this.userRole === 'ROLE_SIMPSON' && this.userId) {
       this.loadCertificatesByOwner(this.userId);
-    } else if (this.userRole === 'ORG' && this.organization) {
+    } else if (this.userRole === 'ROLE_CA' && this.organization) {
       this.loadCertificatesByOrganization(this.organization);
     } else {
       console.warn('Nedostaju podaci za ulogovanog korisnika.');
