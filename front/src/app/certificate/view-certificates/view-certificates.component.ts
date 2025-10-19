@@ -13,6 +13,22 @@ export class ViewCertificatesComponent {
   userRole: string | null = null;
   userId: string | null = null;
   organization: string | null = null;
+  showRevokeDialog = false;
+  selectedCertId: string | null = null;
+  selectedReason: string = '';
+
+  revocationReasons: string[] = [
+    'UNSPECIFIED',
+    'KEY_COMPROMISE',
+    'CA_COMPROMISE',
+    'AFFILIATION_CHANGED',
+    'SUPERSEDED',
+    'CESSATION_OF_OPERATION',
+    'CERTIFICATE_HOLD',
+    'REMOVE_FROM_CRL',
+    'PRIVILEGE_WITHDRAWN',
+    'AA_COMPROMISE'
+  ];
 
   constructor(private certificateService: CertificateService) {}
 
@@ -20,9 +36,12 @@ export class ViewCertificatesComponent {
 
     this.userRole = localStorage.getItem('userRole');
     this.userId = localStorage.getItem('userId'); 
-    this.organization = localStorage.getItem('organization');
+    this.organization = localStorage.getItem('organization');                                                                      
+    this.loadCertifiactes()
+  }
 
-     if (this.userRole === 'ADMIN') {
+  loadCertifiactes(): void {
+    if (this.userRole === 'ADMIN') {
       this.loadAllCertificates();
     } else if (this.userRole === 'USER' && this.userId) {
       this.loadCertificatesByOwner(this.userId);
@@ -31,34 +50,6 @@ export class ViewCertificatesComponent {
     } else {
       console.warn('Nedostaju podaci za ulogovanog korisnika.');
     }
-
-  // 👇 Za sada statički primeri — kasnije ćeš ovo puniti iz servisa
-  //   this.certificates = [
-  //     {
-  //       id: '1',
-  //       serialNumber: 'ABC123',
-  //       organization: 'MAP Security',
-  //       revoked: false,
-  //       revocationReason: '',
-  //       validFrom: '2024-01-01T00:00:00',
-  //       validTo: '2026-01-01T00:00:00',
-  //       type: 'ROOT',
-  //       publicKey: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp...',
-  //       isCa: true
-  //     },
-  //     {
-  //       id: '2',
-  //       serialNumber: 'XYZ789',
-  //       organization: 'TechTrust',
-  //       revoked: true,
-  //       revocationReason: 'Compromised key',
-  //       validFrom: '2023-03-01T00:00:00',
-  //       validTo: '2025-03-01T00:00:00',
-  //       type: 'END_ENTITY',
-  //       publicKey: 'MIIBCgKCAQEAtqksnZ2bK7dY7...',
-  //       isCa: false
-  //     }
-  //   ];
   }
 
   loadAllCertificates(): void {
@@ -97,6 +88,34 @@ export class ViewCertificatesComponent {
   }
 
   onRevoke(certId: string): void {
-    // TODO: implementirati API poziv kasnije
+    this.selectedCertId = certId;
+    this.showRevokeDialog = true;
+  }
+
+  confirmRevoke(): void {
+    if (!this.selectedCertId || !this.selectedReason) {
+      alert('Please select a reason before confirming.');
+      return;
+    }
+
+    this.certificateService.revokeCertificate(this.selectedCertId, this.selectedReason).subscribe({
+      next: () => {
+        alert('Certificate revoked successfully.');
+        this.showRevokeDialog = false;
+        this.selectedReason = '';
+        this.selectedCertId = null;
+        this.loadCertifiactes();
+      },
+      error: (err) => {
+        alert('Error revoking certificate.');
+        console.error(err);
+      }
+    });
+  }
+
+  cancelRevoke(): void {
+    this.showRevokeDialog = false;
+    this.selectedReason = '';
+    this.selectedCertId = null;
   }
 }

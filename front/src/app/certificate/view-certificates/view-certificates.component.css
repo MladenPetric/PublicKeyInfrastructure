@@ -48,3 +48,55 @@ button {
   background-color: #aaa;
   cursor: not-allowed;
 }
+
+dialog-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.dialog {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.dialog h3 {
+  margin-bottom: 15px;
+}
+
+.dialog select {
+  width: 100%;
+  padding: 6px;
+  margin: 10px 0 20px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-confirm {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+.btn-cancel {
+  background: #ccc;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+}

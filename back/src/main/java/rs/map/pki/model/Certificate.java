@@ -33,8 +33,9 @@ public class Certificate {
     @Column(nullable = false)
     private boolean revoked;
 
-    @Column(nullable = false)
-    private String revocationReason;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = true)
+    private RevocationReason revocationReason;
 
     @Column(nullable = false)
     private LocalDateTime validFrom;

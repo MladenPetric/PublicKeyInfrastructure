@@ -25,8 +25,21 @@ export class CertificateService {
     return this.http.get<CertificateDTO[]>(`${this.apiUrl}/get-by-organization/${org}`);
   }
 
-  downloadCertificate(id: string): Observable<Blob> {
+   downloadCertificate(id: string): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob' });
   }
 
+
+
+
+ 
+
+  revokeCertificate(id: string, reason: string): Observable<void> {
+    const body = { reason };
+    return this.http.put<void>(`${this.apiUrl}/revoke/${id}`, body);
+  }
+  
+  getRevokedCertificates(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/crl`);
+  }
 }

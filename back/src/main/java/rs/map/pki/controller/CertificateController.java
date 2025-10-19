@@ -12,6 +12,8 @@ import rs.map.pki.model.User;
 import rs.map.pki.service.CertificateService;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -36,7 +38,10 @@ public class CertificateController {
         return ResponseEntity.ok(certificateService.getCertificatesByOrganization(organization));
     }
 
-    @GetMapping("/download/{id}")
+
+
+
+     @GetMapping("/download/{id}")
     public ResponseEntity<byte[]> downloadCertificate(@PathVariable UUID id) {
         try {
 
@@ -50,6 +55,30 @@ public class CertificateController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    @PutMapping("/revoke/{id}")
+    public ResponseEntity<Void> revokeCertificate(@PathVariable UUID id, @RequestBody Map<String, String> body) {
+        String reason = body.get("reason");
+        certificateService.revokeCertificate(id, reason);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/crl")
+    public ResponseEntity<List<CertificateDTO>> getRevokedCertificates() {
+        List<CertificateDTO> revoked = certificateService.getRevokedCertificates();
+        return ResponseEntity.ok(revoked);
     }
 
 }
