@@ -24,12 +24,12 @@ public class AuthController {
     private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
     private final UserDetailsService userDetailsService;
+    private final JwtProperties jwtProperties;
 
     // POST auth/login
     @PostMapping("/login")
     ResponseEntity<TokenResponseDto> login(
-            @RequestBody @Valid LoginRequestDto request,
-            JwtProperties jwtProperties
+            @RequestBody @Valid LoginRequestDto request
     ) {
         var auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())

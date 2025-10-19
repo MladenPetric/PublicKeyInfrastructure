@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import rs.map.pki.model.User;
 import rs.map.pki.repository.UserRepository;
 import rs.map.pki.util.PkiUserDetails;
 
@@ -17,6 +18,7 @@ public class PkiUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         return users.findByEmail(email)
+                .filter(u -> User.Status.ACTIVE.equals(u.getStatus()))
                 .map(PkiUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
