@@ -15,7 +15,8 @@ import { CreateSchemaComponent } from './certificate/create-schema/create-schema
 import { IssueCertificateComponent } from './certificate/issue-certificate/issue-certificate.component';
 import { RequestCertificateComponent } from './certificate/request-certificate/request-certificate.component';
 import { ViewCertificatesComponent } from './certificate/view-certificates/view-certificates.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,9 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor])
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
