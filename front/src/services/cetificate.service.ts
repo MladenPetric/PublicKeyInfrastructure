@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CertificateDTO } from '../dto/cetificate/certificate-view.dto';
-
+import { CertificateRequestDto } from '../dto/cetificate/certificateRequestDto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CertificateService {
-
-  private apiUrl = 'https://localhost:8080/certificate'; 
+  private apiUrl = 'https://localhost:8080/certificate';
 
   constructor(private http: HttpClient) {}
 
@@ -18,23 +17,39 @@ export class CertificateService {
   }
 
   getCertificatesByOwnerId(userId: string): Observable<CertificateDTO[]> {
-    return this.http.get<CertificateDTO[]>(`${this.apiUrl}/get-by-owner/${userId}`);
+    return this.http.get<CertificateDTO[]>(
+      `${this.apiUrl}/get-by-owner/${userId}`
+    );
   }
 
   getCertificatesByOrganization(org: string): Observable<CertificateDTO[]> {
-    return this.http.get<CertificateDTO[]>(`${this.apiUrl}/get-by-organization/${org}`);
+    return this.http.get<CertificateDTO[]>(
+      `${this.apiUrl}/get-by-organization/${org}`
+    );
   }
 
-   downloadCertificate(id: string): Observable<Blob> {
-    return this.http.get(`${this.apiUrl}/download/${id}`, { responseType: 'blob' });
+  downloadCertificate(id: string): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/download/${id}`, {
+      responseType: 'blob',
+    });
   }
 
   revokeCertificate(id: string, reason: string): Observable<void> {
     const body = { reason };
     return this.http.put<void>(`${this.apiUrl}/revoke/${id}`, body);
   }
-  
+
   getRevokedCertificates(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/crl`);
+  }
+
+  getAllCaCertificates(): Observable<CertificateDTO[]> {
+    return this.http.get<CertificateDTO[]>(`${this.apiUrl}/get-all-ca`);
+  }
+
+  generateCertificate(request: CertificateRequestDto): Observable<string> {
+    return this.http.post(`${this.apiUrl}/generate`, request, {
+      responseType: 'text',
+    });
   }
 }

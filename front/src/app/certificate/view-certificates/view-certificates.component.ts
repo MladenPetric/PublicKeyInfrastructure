@@ -8,7 +8,7 @@ import { filter } from 'rxjs';
   selector: 'app-view-certificates',
   standalone: false,
   templateUrl: './view-certificates.component.html',
-  styleUrl: './view-certificates.component.css'
+  styleUrl: './view-certificates.component.css',
 })
 export class ViewCertificatesComponent {
   certificates: CertificateDTO[] = [];
@@ -29,21 +29,21 @@ export class ViewCertificatesComponent {
     'CERTIFICATE_HOLD',
     'REMOVE_FROM_CRL',
     'PRIVILEGE_WITHDRAWN',
-    'AA_COMPROMISE'
+    'AA_COMPROMISE',
   ];
 
-  constructor(private certificateService: CertificateService, private authService: AuthService) {}
+  constructor(
+    private certificateService: CertificateService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
-
-    this.authService.user$.pipe(
-          filter(user => !!user)
-        ).subscribe(user => {
-          this.userRole = user.role
-          this.userId = user.id
-          this.organization = user.organization
-          this.loadCertifiactes()
-    })                                                            
+    this.authService.user$.pipe(filter((user) => !!user)).subscribe((user) => {
+      this.userRole = user.role;
+      this.userId = user.id;
+      this.organization = user.organization;
+      this.loadCertifiactes();
+    });
   }
 
   loadCertifiactes(): void {
@@ -60,22 +60,24 @@ export class ViewCertificatesComponent {
 
   loadAllCertificates(): void {
     this.certificateService.getAllCertificates().subscribe({
-      next: (data) => this.certificates = data,
-      error: (err) => console.error('Error fetching all certificates', err)
+      next: (data) => (this.certificates = data),
+      error: (err) => console.error('Error fetching all certificates', err),
     });
   }
 
   loadCertificatesByOwner(userId: string): void {
     this.certificateService.getCertificatesByOwnerId(userId).subscribe({
-      next: (data) => this.certificates = data,
-      error: (err) => console.error('Error fetching certificates by owner', err)
+      next: (data) => (this.certificates = data),
+      error: (err) =>
+        console.error('Error fetching certificates by owner', err),
     });
   }
 
   loadCertificatesByOrganization(org: string): void {
     this.certificateService.getCertificatesByOrganization(org).subscribe({
-      next: (data) => this.certificates = data,
-      error: (err) => console.error('Error fetching certificates by organization', err)
+      next: (data) => (this.certificates = data),
+      error: (err) =>
+        console.error('Error fetching certificates by organization', err),
     });
   }
 
@@ -89,7 +91,7 @@ export class ViewCertificatesComponent {
         a.click();
         window.URL.revokeObjectURL(url);
       },
-      error: (err) => console.error('Error downloading certificate:', err)
+      error: (err) => console.error('Error downloading certificate:', err),
     });
   }
 
@@ -104,19 +106,21 @@ export class ViewCertificatesComponent {
       return;
     }
 
-    this.certificateService.revokeCertificate(this.selectedCertId, this.selectedReason).subscribe({
-      next: () => {
-        alert('Certificate revoked successfully.');
-        this.showRevokeDialog = false;
-        this.selectedReason = '';
-        this.selectedCertId = null;
-        this.loadCertifiactes();
-      },
-      error: (err) => {
-        alert('Error revoking certificate.');
-        console.error(err);
-      }
-    });
+    this.certificateService
+      .revokeCertificate(this.selectedCertId, this.selectedReason)
+      .subscribe({
+        next: () => {
+          alert('Certificate revoked successfully.');
+          this.showRevokeDialog = false;
+          this.selectedReason = '';
+          this.selectedCertId = null;
+          this.loadCertifiactes();
+        },
+        error: (err) => {
+          alert('Error revoking certificate.');
+          console.error(err);
+        },
+      });
   }
 
   cancelRevoke(): void {

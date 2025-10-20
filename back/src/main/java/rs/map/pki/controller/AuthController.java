@@ -44,7 +44,6 @@ public class AuthController {
                 .secure(true)
                 .path("/api/auth/refresh")
                 .maxAge(jwtProperties.getRefreshExpiration())
-                .sameSite("Strict")
                 .build()
                 .toString();
 

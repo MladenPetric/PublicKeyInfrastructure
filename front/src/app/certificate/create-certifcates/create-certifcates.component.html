@@ -1,1 +1,82 @@
-<p>create-certifcates works!</p>
+<div class="certificate-form-container">
+  <h2>Create Certificate</h2>
+
+  <form [formGroup]="certificateForm" (ngSubmit)="createCertificate()">
+
+    <!-- Administrator: može sve -->
+    <ng-container *ngIf="userRole === 'ROLE_ADMIN'">
+      <label>Certificate Type</label>
+      <select formControlName="type">
+        <option value="ROOT">Root (self-signed)</option>
+        <option value="INTERMEDIATE">Intermediate</option>
+        <option value="END_ENTITY">End-Entity</option>
+      </select>
+
+      <label>Parent Certificate (optional)</label>
+      <select formControlName="parentId">
+        <option value="">-- None --</option>
+        <option *ngFor="let ca of availableCAs" [value]="ca.id">
+          {{ ca.organization }} ({{ ca.type }})
+        </option>
+      </select>
+
+      <div class="checkbox-field">
+        <label for="isCa">This certificate can issue others (CA)</label>
+        <input type="checkbox" formControlName="isCa" id="isCa">
+      </div>
+    </ng-container>
+
+    <!-- CA korisnik: može Intermediate i End-Entity -->
+    <ng-container *ngIf="userRole === 'ROLE_CA'">
+      <label>Certificate Type</label>
+      <select formControlName="type">
+        <option value="INTERMEDIATE">Intermediate</option>
+        <option value="END_ENTITY">End-Entity</option>
+      </select>
+
+      <label>Parent Certificate</label>
+      <select formControlName="parentId">
+        <option *ngFor="let ca of availableCAs" [value]="ca.id">
+          {{ ca.organization }} ({{ ca.type }})
+        </option>
+      </select>
+    </ng-container>
+
+    <!-- Običan korisnik (SIMSPON): može samo End-Entity -->
+    <ng-container *ngIf="userRole === 'ROLE_SIMPSON'">
+      <label>Certificate Type</label>
+      <input type="text" value="END_ENTITY" disabled />
+    </ng-container>
+
+    <!-- Zajednička polja -->
+    <label>Organization</label>
+    <input type="text" formControlName="organization" />
+    
+    <label>Organization Unit</label>
+    <input type="text" formControlName="organizationUnit" />
+
+    <label>Common name</label>
+    <input type="text" formControlName="commonName" />
+    
+    <label>Country</label>
+    <input type="text" formControlName="country" />
+
+    <div class="validity">
+      <label>Valid From</label>
+      <input type="datetime-local" formControlName="validFrom" />
+
+      <label>Valid To</label>
+      <input type="datetime-local" formControlName="validTo" />
+    </div>
+
+    <label for="issuerId">Issuer</label>
+        <select id="issuerId" formControlName="issuerId">
+        <option value="">-- Select Issuer Certificate --</option>
+        <option *ngFor="let i of issuers" [value]="i.id">
+            {{ i.organization }} ({{ i.type }})
+        </option>
+    </select>
+
+    <button type="submit">Create</button>
+  </form>
+</div>

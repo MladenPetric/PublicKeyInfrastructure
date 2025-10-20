@@ -12,7 +12,12 @@ public interface CertificateRepository extends JpaRepository<Certificate, UUID> 
 
     Collection<Certificate> findByOwner(User owner);
 
-    Collection<Certificate> findByOrganization(String organization);
+    default Collection<Certificate> findByOrganization(String organization) {
+        return findAll().stream()
+                .filter(c ->
+                        c.getSubject() != null && organization.equalsIgnoreCase(c.getSubject().getOrganization())
+                ).toList();
+    }
 
     List<Certificate> findAllByRevokedTrue();
 }

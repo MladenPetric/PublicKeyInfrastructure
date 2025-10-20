@@ -67,8 +67,10 @@ public class CertificateService {
                 var issuerData = issuerCert.getSubject();
                 issuer = issuerData.toX500Name();
             }
-
-            Certificate parent = certificateRepository.findById(request.getParentId()).orElseThrow();
+            Certificate parent = null;
+            if (request.getParentId() != null) {
+                parent = certificateRepository.findById(request.getParentId()).orElseThrow();
+            }
             // Pozovi util klasu da napravi sertifikat
             Certificate cert = new Certificate();
             cert.setSerialNumber(UUID.randomUUID().toString());

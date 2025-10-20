@@ -27,13 +27,13 @@ public class DataSeeder implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        var users = List.of(
-//                new User((UUID) null, "admin@map.rs", passwordEncoder.encode("securepassword"),"Admin", "Adminović", "MAP", User.Role.ROLE_ADMIN, User.Status.ACTIVE),
+        var users = List.of(
+                new User((UUID) null, "admin@map.rs", passwordEncoder.encode("securepassword"),"Admin", "Adminović", "MAP", User.Role.ROLE_ADMIN, User.Status.ACTIVE));
 //                new User(null, "organizer@map.rs", passwordEncoder.encode("organizerpass"), "Olga", "Olgic", "MAP", User.Role.ROLE_CA, User.Status.ACTIVE),
 //                new User(null, "user@map.rs", passwordEncoder.encode("userpass"), "Uroš", "Urosevic", "MAP", User.Role.ROLE_SIMPSON, User.Status.ACTIVE)
 //        );
 //
-//        this.users.saveAllAndFlush(users);
+        this.users.saveAllAndFlush(users);
 //
 //        var admin = users.get(0);
 //        var ca  = users.get(1);
