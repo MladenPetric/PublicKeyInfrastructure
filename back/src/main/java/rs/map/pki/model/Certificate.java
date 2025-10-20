@@ -5,7 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bouncycastle.asn1.x500.X500Name;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -24,8 +26,13 @@ public class Certificate {
     @Column(nullable = false, unique = true)
     private String serialNumber;
 
-    @Column(nullable = false)
-    private String organization;
+    @Embedded
+    @AttributeOverride(name = "dn", column = @Column(name = "subject_dn", nullable = false))
+    private PkiX500Name subject;
+
+    @Embedded
+    @AttributeOverride(name = "dn", column = @Column(name = "issuer_dn", nullable = false))
+    private PkiX500Name issuer;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User owner;
@@ -38,10 +45,10 @@ public class Certificate {
     private RevocationReason revocationReason;
 
     @Column(nullable = false)
-    private LocalDateTime validFrom;
+    private LocalDate validFrom;
 
     @Column(nullable = false)
-    private LocalDateTime validTo;
+    private LocalDate validTo;
 
     @ManyToOne(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     private Certificate parent;
@@ -54,9 +61,6 @@ public class Certificate {
 
     @Column(columnDefinition = "TEXT")
     private String privateKeyEncrypted;
-
-    @Column(nullable = false)
-    private String digitalSignature;
 
     private boolean isCa;
 }
