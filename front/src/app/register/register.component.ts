@@ -7,22 +7,43 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   selector: 'app-register',
   standalone: false,
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.css',
 })
 export class RegisterComponent {
   registerForm: FormGroup;
-  organizations: string[] = ['Google', 'Microsoft', 'Tesla', 'Amazon', 'OpenAI', 'SpaceX'];
+  organizations: string[] = [
+    'Google',
+    'Microsoft',
+    'Tesla',
+    'Amazon',
+    'OpenAI',
+    'SpaceX',
+  ];
   selectedOrganization: string = '';
 
-  constructor(private fb: FormBuilder, private registrationService: RegistrationService) {
-    this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/)]],
-      repeatPassword: ['', Validators.required],
-      organization: ['', Validators.required]
-    }, { validators: this.passwordsMatchValidator });
+  constructor(
+    private fb: FormBuilder,
+    private registrationService: RegistrationService
+  ) {
+    this.registerForm = this.fb.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern(
+              /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).{8,}$/
+            ),
+          ],
+        ],
+        repeatPassword: ['', Validators.required],
+        organization: ['', Validators.required],
+      },
+      { validators: this.passwordsMatchValidator }
+    );
   }
 
   // Custom validator za poklapanje lozinki
@@ -48,19 +69,17 @@ export class RegisterComponent {
       lastName: formValues.lastName,
       email: formValues.email,
       password: formValues.password,
-      organization: formValues.organization
+      organization: formValues.organization,
     };
 
     this.registrationService.registerUser(request).subscribe({
-      next: () => {
-        alert('Registration successful! Check your email for verification.');
+      next: (request) => {
+        alert(request);
+        this.registerForm.reset();
       },
       error: (err) => {
         console.error(err);
-      
-      }
+      },
     });
-  
-  
   }
 }

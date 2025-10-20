@@ -18,7 +18,7 @@ public class RegistrationController {
     @PostMapping( "/register")
     public ResponseEntity<?> registerUser(@RequestBody UserRegistrationRequestDto request) {
         registrationService.registerUser(request);
-        return ResponseEntity.ok("Registracija uspešna! Proverite mejl za aktivacioni link.");
+        return ResponseEntity.ok("Registration successful! Check email for activation link.");
     }
     // POST admin@auth/register/<role>
     @PreAuthorize("hasRole('ADMIN')")
@@ -27,7 +27,7 @@ public class RegistrationController {
             @RequestBody UserRegistrationRequestDto request
     ) {
         registrationService.registerCAUserByAdmin(request);
-        return ResponseEntity.ok("Registracija uspešna!");
+        return ResponseEntity.ok("Registration successful!");
     }
 
     @GetMapping("/activate")
