@@ -7,6 +7,7 @@ import lombok.Setter;
 import rs.map.pki.model.Certificate;
 import rs.map.pki.model.CertificateType;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -20,8 +21,8 @@ public class CertificateDTO {
     private String organization;
     private boolean revoked;
     private String revocationReason;
-    private LocalDateTime validFrom;
-    private LocalDateTime validTo;
+    private LocalDate validFrom;
+    private LocalDate validTo;
     private CertificateType type;
     private String publicKey;
     private boolean isCa;
@@ -29,7 +30,7 @@ public class CertificateDTO {
     public CertificateDTO(Certificate c) {
         this.id = c.getId();
         this.serialNumber = c.getSerialNumber();
-        this.organization = c.getOrganization();
+        //this.organization = c.getOrganization();
         this.revoked = c.isRevoked();
         this.revocationReason = String.valueOf(c.getRevocationReason());
         this.validFrom = c.getValidFrom();

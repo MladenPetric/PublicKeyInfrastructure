@@ -6,8 +6,10 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import rs.map.pki.dto.CertificateDTO;
+import rs.map.pki.dto.CertificateRequestDto;
 import rs.map.pki.model.User;
 import rs.map.pki.service.CertificateService;
 
@@ -22,6 +24,18 @@ public class CertificateController {
 
     @Autowired
     private CertificateService certificateService;
+
+    @PostMapping("/generate")
+    public ResponseEntity<?> generateCertificate(@RequestBody CertificateRequestDto dto) {
+        certificateService.generateCertificate(dto);
+        return ResponseEntity.ok("Successfully generated certificate");
+    }
+
+    @GetMapping(value = "/get-all-ca")
+    public ResponseEntity<Collection<CertificateDTO>> getAllCaCertificates() {
+        return ResponseEntity.ok(certificateService.getAllCaCertificates());
+    }
+
 
     @GetMapping(value = "/get-all")
     public ResponseEntity<Collection<CertificateDTO>> getAllCertificates() {
